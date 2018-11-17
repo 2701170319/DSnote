@@ -1,0 +1,24 @@
+data segment
+    str db 'ASDFJFAAKDK'
+    NN EQU $-str
+data ends
+
+code segment
+    assume cs:code,ds:data
+start: mov ax,data
+       mov ds,ax
+       LEA si,str
+       mov cx,NN
+       mov dl 0
+again:
+       mov AL,[si]
+       INC si
+       cmp AL,41H
+       JNZ a1
+       INC dl
+a1:LOOP again
+
+mov ah,4ch
+int 21h
+code ends
+end start

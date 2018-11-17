@@ -1,0 +1,34 @@
+data segment
+block db 3,45h,90h,87h,50h,99h,9Eh
+cnt EQU $-block
+plus_buf db cnt dup(?)
+minus_buf db cnt dup(?)
+data ends
+
+code segment
+assume cs:code,ds:data
+start:
+      mov ax,data
+      mov ds,ax
+      lea bx,block
+      lea si,plus_buf
+      lea di,minus_buf
+      mov cx,cnt         
+next:
+      mov al,[bx]
+      test al,80h
+      jz zh
+      mov [di],al
+      inc di
+      jmp a1
+      zh:mov [si],al
+      inc si
+      a1:inc bx
+      loop next
+mov ah,4ch
+int 21h
+code ends
+end start
+
+                                                                                                                                             
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
